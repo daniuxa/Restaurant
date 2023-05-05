@@ -12,7 +12,7 @@ namespace Restaurant.Dal.Entities
     public class Table
     {
         [Key]
-        public string TableId { get; set; } = null!;
+        public int TableId { get; set; } 
         public int AmountOfPlaces { get; set; }
         public IEnumerable<InRestaurantOrder> InRestaurantOrders { get; set; } = new List<InRestaurantOrder>();
     }
