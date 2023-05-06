@@ -10,5 +10,6 @@ namespace Restaurant.Bll.Services.Interfaces
     public interface IWineService
     {
         Task<IEnumerable<Wine>> GetWineListAsync();
+        Task<Wine?> GetWineAsync(Guid PositionId);
     }
 }

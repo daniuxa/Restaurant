@@ -18,6 +18,11 @@ namespace Restaurant.Bll.Profiles
                 memberOptions => memberOptions.MapFrom(sourceMembersPath => sourceMembersPath.Region.Country))
                 .ForMember(destinationMember => destinationMember.RegionName,
                 memberOptions => memberOptions.MapFrom(sourceMembersPath => sourceMembersPath.Region.RegionName));
+            CreateMap<Wine, WineDetailInfoDTO>()
+                .ForMember(destinationMember => destinationMember.Country,
+                memberOptions => memberOptions.MapFrom(sourceMembersPath => sourceMembersPath.Region.Country))
+                .ForMember(destinationMember => destinationMember.RegionName,
+                memberOptions => memberOptions.MapFrom(sourceMembersPath => sourceMembersPath.Region.RegionName));
         }
     }
 }

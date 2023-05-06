@@ -25,6 +25,15 @@ namespace Restaurant.API.Controllers
 
             return Ok(_mapper.Map<IEnumerable<WineForListDTO>>(wines));
         }
-        
+        [HttpGet("api/wines/{PositionId}")]
+        public async Task<ActionResult<WineDetailInfoDTO>> GetWine(Guid PositionId)
+        {
+            var wine = await _wineService.GetWineAsync(PositionId);
+            if (wine == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<WineDetailInfoDTO>(wine));
+        }
     }
 }

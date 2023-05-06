@@ -19,6 +19,13 @@ namespace Restaurant.Bll.Services
             this._restaurantContext = restaurantContext ?? throw new ArgumentNullException(nameof(restaurantContext));
         }
 
+        public async Task<Wine?> GetWineAsync(Guid PositionId)
+        {
+            Wine? wine = null;
+            wine = await _restaurantContext.Wines.Include(x => x.Region).Where(x => x.PositionId == PositionId).FirstOrDefaultAsync();
+            return wine;
+        }
+
         public async Task<IEnumerable<Wine>> GetWineListAsync()
         {
             return await _restaurantContext.Wines.Include(x => x.Region).ToListAsync();
