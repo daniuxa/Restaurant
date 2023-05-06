@@ -12,6 +12,5 @@ namespace Restaurant.Dal.Entities
     {
         public string TypeOfDish { get; set; } = null!;
         public double Weight { get; set; }
-        public string? PhotoLink { get; set; }
     }
 }

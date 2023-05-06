@@ -4,6 +4,8 @@ using Serilog;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Restaurant.Bll.Services.Interfaces;
+using Restaurant.Bll.Services;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -19,14 +21,8 @@ builder.Host.UseSerilog();
 
 // Add services to the container.
 
-builder.Services.AddControllers(configure =>
-{
-    configure.ReturnHttpNotAcceptable = true;
-    configure.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status400BadRequest));
-    configure.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
-    configure.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status406NotAcceptable));
-
-}).AddNewtonsoftJson()
+builder.Services.AddControllers()
+    .AddNewtonsoftJson()
     .AddXmlSerializerFormatters()
     .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,7 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(setupAction =>
 {
-    setupAction.SwaggerDoc("CarShowroomOpenAPISpecification", new()
+    setupAction.SwaggerDoc("RestaurantOpenAPISpecification", new()
     {
         Title = "Restaurant API",
         Version = "v1",
@@ -52,7 +48,9 @@ builder.Services.AddSwaggerGen(setupAction =>
 });
 
 builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<IWineService, WineService>();
 
 var app = builder.Build();
 
@@ -63,7 +61,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(setupAction =>
     {
         setupAction.SwaggerEndpoint("/swagger/RestaurantOpenAPISpecification/swagger.json", "Restaurant API");
-    });
+    }
+);
 }
 
 app.UseHttpsRedirection();

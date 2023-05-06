@@ -6,9 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>8c63c0f7-faa3-414d-8aba-0f226918ebc3</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16">
       <PrivateAssets>all</PrivateAssets>
@@ -19,14 +22,12 @@
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Restaurant.Bll\Restaurant.Bll.csproj" />
     <ProjectReference Include="..\Restaurant.Dal\Restaurant.Dal.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -14,7 +14,8 @@ namespace Restaurant.Dal.Entities
         [Key]
         public Guid PositionId { get; set; }
         public decimal Price { get; set; }
-        public string NameOfDish { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string? PhotoLink { get; set; }
         public IEnumerable<Order> Orders { get; set; } = new List<Order>();
         public IEnumerable<PositionInOrder> PositionsInOrders { get; set; } = new List<PositionInOrder>();
 
