@@ -9,6 +9,6 @@ namespace Restaurant.Bll.Services.Interfaces
 {
     public interface ICloudImageService
     {
-        Task<string> UploadImageToCloud(IFormFile file);
+        Task<(Guid, string)> UploadImageToCloud(IFormFile file);
     }
 }

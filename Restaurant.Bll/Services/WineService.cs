@@ -31,9 +31,9 @@ namespace Restaurant.Bll.Services
             return await _restaurantContext.Wines.ToListAsync();
         }
 
-        public async Task<Wine> AddWine(Wine wine, string photoLink)
+        public async Task<Wine> AddWineAsync(Guid positionId, Wine wine, string photoLink)
         {
-            wine.PositionId = Guid.NewGuid();
+            wine.PositionId = positionId;
             wine.PhotoLink = photoLink;
             await _restaurantContext.Wines.AddAsync(wine);
             return wine;
@@ -42,6 +42,11 @@ namespace Restaurant.Bll.Services
         public async Task<bool> SaveChangesAsync()
         {
             return (await _restaurantContext.SaveChangesAsync() >= 0);
+        }
+
+        public async Task DeleteAllWines()
+        {
+            _restaurantContext.Wines.RemoveRange(await _restaurantContext.Wines.ToListAsync());
         }
     }
 }

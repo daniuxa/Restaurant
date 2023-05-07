@@ -44,15 +44,23 @@ namespace Restaurant.API.Controllers
         {
             var finalWine = _mapper.Map<Wine>(wine);
             //Add photo to db and get a link
-            var photoLink = await _cloudImageService.UploadImageToCloud(wine.photo);
+            var (positionId, photoLink) = await _cloudImageService.UploadImageToCloud(wine.photo);
             //Add wine and link to db
-            var wineAdded = await _wineService.AddWine(finalWine, photoLink);
+            var wineAdded = await _wineService.AddWineAsync(positionId, finalWine, photoLink);
             //SaveChanges
             await _wineService.SaveChangesAsync();
             //To return value
             var wineToReturn = _mapper.Map<WineDetailInfoDTO>(wineAdded);
             //CreatedAtRoute
             return CreatedAtRoute("GetWine", new {PositionId = wineToReturn.PositionId}, wineToReturn);
+        }
+
+        [HttpDelete("api/wines")]
+        public async Task<IActionResult> DeleteAllWines()
+        {
+            await _wineService.DeleteAllWines();
+            await _wineService.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

@@ -20,9 +20,10 @@ namespace Restaurant.Bll.Services
         {
              _imagekit = new ImagekitClient(publicKey, privateKey, urlEndPoint);
         }
-        public async Task<string> UploadImageToCloud(IFormFile file)
+        public async Task<(Guid, string)> UploadImageToCloud(IFormFile file)
         {
             byte[] fileBytes;
+            Guid PositionId = Guid.NewGuid();
             using (var ms = new MemoryStream())
             {
                 file.CopyTo(ms);
@@ -31,10 +32,10 @@ namespace Restaurant.Bll.Services
             FileCreateRequest ob = new FileCreateRequest
             {
                 file = fileBytes,
-                fileName = file.Name
+                fileName = PositionId.ToString()
             };
             Result result = await _imagekit.UploadAsync(ob);
-            return result.url;
+            return (PositionId, result.url);
         }
     }
 }
