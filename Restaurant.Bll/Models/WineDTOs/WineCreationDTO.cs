@@ -1,20 +1,19 @@
-﻿using System;
+﻿using Restaurant.Bll.Models.MenuPositionDTOs;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant.Dal.Entities
+namespace Restaurant.Bll.Models.WineDTOs
 {
-    [Table("Wines")]
-    public class Wine : MenuPosition
+    public class WineCreationDTO : MenuPositionCreationDTO
     {
         public string Brand { get; set; } = null!;
         public int Year { get; set; }
         public bool IsBottle { get; set; }
+        public string RegionName { get; set; } = null!;
+        public string Country { get; set; } = null!;
         public string TypeOfWine { get; set; } = null!;
-        public string Country { get; set; }
-        public string RegionName { get; set; }
     }
 }

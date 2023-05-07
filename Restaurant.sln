@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.API", "Restaurant.API\Restaurant.API.csproj", "{BF47AA30-8C2E-44C5-AC9C-50B98E90DD90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.API", "Restaurant.API\Restaurant.API.csproj", "{BF47AA30-8C2E-44C5-AC9C-50B98E90DD90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Dal", "Restaurant.Dal\Restaurant.Dal.csproj", "{DB2BBEE2-E03C-433A-B14A-58AA18202D6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Dal", "Restaurant.Dal\Restaurant.Dal.csproj", "{DB2BBEE2-E03C-433A-B14A-58AA18202D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Bll", "Restaurant.Bll\Restaurant.Bll.csproj", "{76CEBBAA-CE1B-4A07-A182-9F719DCD5598}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Restaurant.Bll", "Restaurant.Bll\Restaurant.Bll.csproj", "{76CEBBAA-CE1B-4A07-A182-9F719DCD5598}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{79BA6110-AF4E-439D-9393-21E6DFE16A1F}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

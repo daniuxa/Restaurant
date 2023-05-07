@@ -47,22 +47,33 @@ builder.Services.AddSwaggerGen(setupAction =>
     setupAction.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.Load("Restaurant.Dal").GetName().Name}.xml"));
 });
 
-builder.Services.AddDbContext<RestaurantContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<RestaurantContext>(options => 
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.EnableSensitiveDataLogging();
+});
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IWineService, WineService>();
+builder.Services.AddTransient<ICloudImageService, CloudImageService>();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<RestaurantContext>();
+    await dbContext.Database.MigrateAsync();
+}  
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(setupAction =>
     {
         setupAction.SwaggerEndpoint("/swagger/RestaurantOpenAPISpecification/swagger.json", "Restaurant API");
     }
-);
+    );
 }
 
 app.UseHttpsRedirection();
@@ -71,4 +82,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+//app.Run();
+await app.RunAsync();

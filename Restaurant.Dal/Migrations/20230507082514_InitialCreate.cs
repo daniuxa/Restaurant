@@ -28,25 +28,12 @@ namespace Restaurant.Dal.Migrations
                 {
                     PositionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    NameOfDish = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MenuPositions", x => x.PositionId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RegionOfVines",
-                columns: table => new
-                {
-                    RegionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RegionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RegionOfVines", x => x.RegionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,8 +77,7 @@ namespace Restaurant.Dal.Migrations
                 {
                     PositionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TypeOfDish = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Weight = table.Column<double>(type: "float", nullable: false),
-                    PhotoLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Weight = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,30 +108,25 @@ namespace Restaurant.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vines",
+                name: "Wines",
                 columns: table => new
                 {
                     PositionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     IsBottle = table.Column<bool>(type: "bit", nullable: false),
-                    RegionId = table.Column<int>(type: "int", nullable: false),
-                    TypeOfWine = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TypeOfWine = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RegionName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vines", x => x.PositionId);
+                    table.PrimaryKey("PK_Wines", x => x.PositionId);
                     table.ForeignKey(
-                        name: "FK_Vines_MenuPositions_PositionId",
+                        name: "FK_Wines_MenuPositions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "MenuPositions",
                         principalColumn: "PositionId");
-                    table.ForeignKey(
-                        name: "FK_Vines_RegionOfVines_RegionId",
-                        column: x => x.RegionId,
-                        principalTable: "RegionOfVines",
-                        principalColumn: "RegionId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,11 +247,6 @@ namespace Restaurant.Dal.Migrations
                 name: "IX_PositionsInOrders_MenuPostionId",
                 table: "PositionsInOrders",
                 column: "MenuPostionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vines_RegionId",
-                table: "Vines",
-                column: "RegionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -297,7 +273,7 @@ namespace Restaurant.Dal.Migrations
                 name: "TakeAwayOrders");
 
             migrationBuilder.DropTable(
-                name: "Vines");
+                name: "Wines");
 
             migrationBuilder.DropTable(
                 name: "Tables");
@@ -307,9 +283,6 @@ namespace Restaurant.Dal.Migrations
 
             migrationBuilder.DropTable(
                 name: "MenuPositions");
-
-            migrationBuilder.DropTable(
-                name: "RegionOfVines");
 
             migrationBuilder.DropTable(
                 name: "Clients");

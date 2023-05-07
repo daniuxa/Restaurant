@@ -22,13 +22,26 @@ namespace Restaurant.Bll.Services
         public async Task<Wine?> GetWineAsync(Guid PositionId)
         {
             Wine? wine = null;
-            wine = await _restaurantContext.Wines.Include(x => x.Region).Where(x => x.PositionId == PositionId).FirstOrDefaultAsync();
+            wine = await _restaurantContext.Wines.Where(x => x.PositionId == PositionId).FirstOrDefaultAsync();
             return wine;
         }
 
         public async Task<IEnumerable<Wine>> GetWineListAsync()
         {
-            return await _restaurantContext.Wines.Include(x => x.Region).ToListAsync();
+            return await _restaurantContext.Wines.ToListAsync();
+        }
+
+        public async Task<Wine> AddWine(Wine wine, string photoLink)
+        {
+            wine.PositionId = Guid.NewGuid();
+            wine.PhotoLink = photoLink;
+            await _restaurantContext.Wines.AddAsync(wine);
+            return wine;
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _restaurantContext.SaveChangesAsync() >= 0);
         }
     }
 }

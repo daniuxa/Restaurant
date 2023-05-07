@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+ api:
+  image: restaurant_api_image
+  restart: unless-stopped
+  container_name: restaurant_api_container
+  build:
+   context: .
+   dockerfile: Restaurant.API/Dockerfile
+  ports:
+  - "8080:80" 
+  depends_on:
+  - db
+  networks:
+  - restaurant_net
+  environment:
+   - ASPNETCORE_ENVIRONMENT=Release
+ db:
+  image: mcr.microsoft.com/mssql/server:2019-latest
+  container_name: restaurant_db_container
+  ports: 
+  - "1450:1433"
+  environment:
+  - SA_PASSWORD=RestaurantServicePassword123
+  - ACCEPT_EULA=Y
+  networks:
+  - restaurant_net
+  volumes:
+  - restaurant_db_container:/var/lib/mssql/data
+
+volumes:
+  restaurant_db_container:
+
+networks:
+ restaurant_net:
+  driver: bridge

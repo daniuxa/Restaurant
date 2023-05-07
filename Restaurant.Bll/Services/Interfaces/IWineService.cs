@@ -11,5 +11,7 @@ namespace Restaurant.Bll.Services.Interfaces
     {
         Task<IEnumerable<Wine>> GetWineListAsync();
         Task<Wine?> GetWineAsync(Guid PositionId);
+        Task<bool> SaveChangesAsync();
+        Task<Wine> AddWine(Wine wine, string photoLink);
     }
 }

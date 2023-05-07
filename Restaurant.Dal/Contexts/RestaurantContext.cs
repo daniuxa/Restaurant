@@ -18,7 +18,6 @@ namespace Restaurant.Dal.Contexts
         public DbSet<InRestaurantOrder> InRestaurantOrders { get; set; } = null!;
         public DbSet<MenuPosition> MenuPositions { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
-        public DbSet<RegionOfWine> RegionsOfWine { get; set; } = null!;
         public DbSet<Table> Tables { get; set; } = null!;
         public DbSet<TakeAwayOrder> TakeAwayOrders { get; set; } = null!;
         public DbSet<Wine> Wines { get; set; } = null!;

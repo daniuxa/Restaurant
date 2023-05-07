@@ -14,6 +14,8 @@ namespace Restaurant.Bll.Profiles
         public MenuPositionProfile()
         {
             CreateMap<MenuPosition, MenuPositionForListDTO>();
+            CreateMap<MenuPositionCreationDTO, MenuPosition>();
+
         }
     }
 }

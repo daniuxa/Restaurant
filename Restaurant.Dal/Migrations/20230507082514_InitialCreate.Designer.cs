@@ -12,7 +12,7 @@ using Restaurant.Dal.Contexts;
 namespace Restaurant.Dal.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20230505114541_InitialCreate")]
+    [Migration("20230507082514_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,8 +65,11 @@ namespace Restaurant.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("NameOfDish")
+                    b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -126,27 +129,6 @@ namespace Restaurant.Dal.Migrations
                     b.ToTable("PositionsInOrders");
                 });
 
-            modelBuilder.Entity("Restaurant.Dal.Entities.RegionOfWine", b =>
-                {
-                    b.Property<int>("RegionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RegionId"), 1L, 1);
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RegionId");
-
-                    b.ToTable("RegionOfVines");
-                });
-
             modelBuilder.Entity("Restaurant.Dal.Entities.Table", b =>
                 {
                     b.Property<int>("TableId")
@@ -181,9 +163,6 @@ namespace Restaurant.Dal.Migrations
             modelBuilder.Entity("Restaurant.Dal.Entities.Dish", b =>
                 {
                     b.HasBaseType("Restaurant.Dal.Entities.MenuPosition");
-
-                    b.Property<string>("PhotoLink")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeOfDish")
                         .IsRequired()
@@ -242,11 +221,16 @@ namespace Restaurant.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsBottle")
                         .HasColumnType("bit");
 
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
+                    b.Property<string>("RegionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeOfWine")
                         .IsRequired()
@@ -255,9 +239,7 @@ namespace Restaurant.Dal.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Vines");
+                    b.ToTable("Wines");
                 });
 
             modelBuilder.Entity("Restaurant.Dal.Entities.CommentToOrder", b =>
@@ -361,14 +343,6 @@ namespace Restaurant.Dal.Migrations
                         .HasForeignKey("Restaurant.Dal.Entities.Wine", "PositionId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.HasOne("Restaurant.Dal.Entities.RegionOfWine", "Region")
-                        .WithMany()
-                        .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Restaurant.Dal.Entities.Client", b =>
