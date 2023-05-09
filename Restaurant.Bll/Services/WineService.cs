@@ -26,7 +26,7 @@ namespace Restaurant.Bll.Services
             return wine;
         }
 
-        public async Task<IEnumerable<Wine>> GetWineListAsync()
+        public async Task<IEnumerable<Wine>> GetWinesAsync()
         {
             return await _restaurantContext.Wines.ToListAsync();
         }

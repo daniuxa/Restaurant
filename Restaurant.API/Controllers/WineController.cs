@@ -24,7 +24,7 @@ namespace Restaurant.API.Controllers
         [HttpGet("api/wines")]
         public async Task<ActionResult<WineForListDTO>> GetWineList()
         {
-            var wines = await _wineService.GetWineListAsync();
+            var wines = await _wineService.GetWinesAsync();
 
             return Ok(_mapper.Map<IEnumerable<WineForListDTO>>(wines));
         }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Bll.Services.Interfaces
 {
-    public interface IWineService
+    public interface IDishService
     {
-        Task<IEnumerable<Wine>> GetWinesAsync();
-        Task<Wine?> GetWineAsync(Guid PositionId);
+        Task<IEnumerable<Dish>> GetDishesAsync();
+        Task<Dish?> GetDishAsync(Guid PositionId);
         Task<bool> SaveChangesAsync();
-        Task<Wine> AddWineAsync(Guid positionId, Wine wine, string photoLink);
-        Task DeleteAllWines();
+        Task<Dish> AddDishAsync(Guid positionId, Dish wine, string photoLink);
+        Task DeleteAllDishes();
     }
 }
