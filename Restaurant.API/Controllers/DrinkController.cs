@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Restaurant.Bll.CustomMappers;
 using Restaurant.Bll.Models.DrinkDTOs;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Dal.Entities;
@@ -20,8 +21,15 @@ namespace Restaurant.API.Controllers
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         [HttpGet("api/drinks")]
-        public async Task<ActionResult<DrinkForListDTO>> GetDrinkList()
+        public async Task<IActionResult> GetDrinkList(bool dividedByType = false)
         {
+            if (dividedByType)
+            {
+                var drinksDictionary = await _drinkService.GetDictionaryDrinksAsync();
+
+                return Ok(DrinkMapper.MapDictionary(_mapper, drinksDictionary));
+            }
+
             var drinks = await _drinkService.GetDrinksAsync();
 
             return Ok(_mapper.Map<IEnumerable<DrinkForListDTO>>(drinks));

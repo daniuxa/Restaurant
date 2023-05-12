@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Restaurant.Bll.CustomMappers;
 using Restaurant.Bll.Models.WineDTOs;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Dal.Entities;
@@ -22,8 +23,14 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpGet("api/wines")]
-        public async Task<ActionResult<WineForListDTO>> GetWineList()
+        public async Task<IActionResult> GetWineList(bool dividedByCountry = false)
         {
+            if (dividedByCountry)
+            {
+                var wineDictionary = await _wineService.GetDictionaryWinesAsync();
+
+                return Ok(WineMapper.MapDictionary(_mapper, wineDictionary));
+            }
             var wines = await _wineService.GetWinesAsync();
 
             return Ok(_mapper.Map<IEnumerable<WineForListDTO>>(wines));

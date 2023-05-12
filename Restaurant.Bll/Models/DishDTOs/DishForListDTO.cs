@@ -9,6 +9,6 @@ namespace Restaurant.Bll.Models.DishDTOs
 {
     public class DishForListDTO : MenuPositionForListDTO
     {
-        public string TypeOfDish { get; set; } = null!;
+        
     }
 }

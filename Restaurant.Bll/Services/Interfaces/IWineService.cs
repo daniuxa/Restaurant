@@ -10,6 +10,7 @@ namespace Restaurant.Bll.Services.Interfaces
     public interface IWineService
     {
         Task<IEnumerable<Wine>> GetWinesAsync();
+        Task<IDictionary<string, IEnumerable<Wine>>> GetDictionaryWinesAsync();
         Task<Wine?> GetWineAsync(Guid PositionId);
         Task<bool> SaveChangesAsync();
         Task<Wine> AddWineAsync(Guid positionId, Wine wine, string photoLink);

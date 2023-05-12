@@ -10,6 +10,7 @@ namespace Restaurant.Bll.Services.Interfaces
     public interface IDrinkService
     {
         Task<IEnumerable<Drink>> GetDrinksAsync();
+        Task<IDictionary<string, IEnumerable<Drink>>> GetDictionaryDrinksAsync();
         Task<Drink?> GetDrinkAsync(Guid PositionId);
         Task<bool> SaveChangesAsync();
         Task<Drink> AddDrinkAsync(Guid positionId, Drink drink, string photoLink);

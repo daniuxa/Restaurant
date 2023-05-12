@@ -48,5 +48,16 @@ namespace Restaurant.Bll.Services
         {
             _restaurantContext.Wines.RemoveRange(await _restaurantContext.Wines.ToListAsync());
         }
+
+        public async Task<IDictionary<string, IEnumerable<Wine>>> GetDictionaryWinesAsync()
+        {
+            IDictionary<string, IEnumerable<Wine>> dictionaryWines = new Dictionary<string, IEnumerable<Wine>>();
+            IEnumerable<string> countries = await _restaurantContext.Wines.Select(x => x.Country).Distinct().ToListAsync();
+            foreach (var country in countries)
+            {
+                dictionaryWines.Add(country, await _restaurantContext.Wines.Where(x => x.Country == country).ToListAsync());
+            }
+            return dictionaryWines;
+        }
     }
 }

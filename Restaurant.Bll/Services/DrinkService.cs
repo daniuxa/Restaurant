@@ -30,6 +30,17 @@ namespace Restaurant.Bll.Services
             _restaurantContext.Drinks.RemoveRange(await _restaurantContext.Drinks.ToListAsync());
         }
 
+        public async Task<IDictionary<string, IEnumerable<Drink>>> GetDictionaryDrinksAsync()
+        {
+            IDictionary<string, IEnumerable<Drink>> dictionaryDrinks = new Dictionary<string, IEnumerable<Drink>>();
+            IEnumerable<string> typesOfDrink = await _restaurantContext.Drinks.Select(x => x.TypeOfDrink).Distinct().ToListAsync();
+            foreach (var type in typesOfDrink)
+            {
+                dictionaryDrinks.Add(type, await _restaurantContext.Drinks.Where(x => x.TypeOfDrink == type).ToListAsync());
+            }
+            return dictionaryDrinks;
+        }
+
         public async Task<Drink?> GetDrinkAsync(Guid PositionId)
         {
             Drink? drink = null;

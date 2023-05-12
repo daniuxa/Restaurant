@@ -47,5 +47,16 @@ namespace Restaurant.Bll.Services
         {
             return (await _restaurantContext.SaveChangesAsync() >= 0);
         }
+
+        public async Task<IDictionary<string, IEnumerable<Dish>>> GetDictionaryDishesAsync()
+        {
+            IDictionary<string, IEnumerable<Dish>> dictionaryDishes = new Dictionary<string, IEnumerable<Dish>>();
+            IEnumerable<string> typesOfDish = await _restaurantContext.Dishes.Select(x => x.TypeOfDish).Distinct().ToListAsync();
+            foreach (var type in typesOfDish)
+            {
+                dictionaryDishes.Add(type, await _restaurantContext.Dishes.Where(x => x.TypeOfDish == type).ToListAsync());
+            }
+            return dictionaryDishes;
+        }
     }
 }

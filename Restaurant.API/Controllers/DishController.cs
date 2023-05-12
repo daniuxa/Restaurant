@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Restaurant.Bll.CustomMappers;
 using Restaurant.Bll.Models.DishDTOs;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Dal.Entities;
@@ -22,11 +23,17 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpGet("api/dishes")]
-        public async Task<ActionResult<DishForListDTO>> GetDishList()
+        public async Task<IActionResult> GetDishList(bool dividedByType = false)
         {
-            var wines = await _dishService.GetDishesAsync();
+            if (dividedByType)
+            {
+                var dishesDictionary = await _dishService.GetDictionaryDishesAsync();
 
-            return Ok(_mapper.Map<IEnumerable<DishForListDTO>>(wines));
+                return Ok(DishMapper.MapDictionary(_mapper, dishesDictionary));
+            }
+            var dishes = await _dishService.GetDishesAsync();
+
+            return Ok(_mapper.Map<IEnumerable<DishForListDTO>>(dishes));
         }
 
         [HttpGet("api/dishes/{PositionId}", Name = "GetDish")]
