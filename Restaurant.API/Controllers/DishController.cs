@@ -14,6 +14,7 @@ namespace Restaurant.API.Controllers
         private readonly IDishService _dishService;
         private readonly ICloudImageService _cloudImageService;
         private readonly IMapper _mapper;
+        private const string folderName = "Menu";
 
         public DishController(IDishService dishService, ICloudImageService cloudImageService, IMapper mapper)
         {
@@ -25,6 +26,7 @@ namespace Restaurant.API.Controllers
         [HttpGet("api/dishes")]
         public async Task<IActionResult> GetDishList(bool dividedByType = false)
         {
+            //Response.Headers.Add("Access-Control-Allow-Origin", "*");
             if (dividedByType)
             {
                 var dishesDictionary = await _dishService.GetDictionaryDishesAsync();
@@ -52,7 +54,7 @@ namespace Restaurant.API.Controllers
         {
             var finalDish = _mapper.Map<Dish>(dish);
             //Add photo to db and get a link
-            var (positionId, photoLink) = await _cloudImageService.UploadImageToCloud(dish.photo);
+            var (positionId, photoLink) = await _cloudImageService.UploadImageToCloud(dish.photo, folderName);
             //Add wine and link to db
             var dishAdded = await _dishService.AddDishAsync(positionId, finalDish, photoLink);
             //SaveChanges

@@ -14,6 +14,8 @@ namespace Restaurant.API.Controllers
         private readonly IDrinkService _drinkService;
         private readonly ICloudImageService _cloudImageService;
         private readonly IMapper _mapper;
+        private const string folderName = "Menu";
+
         public DrinkController(IDrinkService drinkService, ICloudImageService cloudImageService, IMapper mapper)
         {
             this._drinkService = drinkService ?? throw new ArgumentNullException(nameof(drinkService));
@@ -50,7 +52,7 @@ namespace Restaurant.API.Controllers
         {
             var finalDrink = _mapper.Map<Drink>(drink);
             //Add photo to db and get a link
-            var (positionId, photoLink) = await _cloudImageService.UploadImageToCloud(drink.photo);
+            var (positionId, photoLink) = await _cloudImageService.UploadImageToCloud(drink.photo, folderName);
             //Add wine and link to db
             var drinkAdded = await _drinkService.AddDrinkAsync(positionId, finalDrink, photoLink);
             //SaveChanges
