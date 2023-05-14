@@ -9,6 +9,7 @@ using Restaurant.Dal.Entities;
 namespace Restaurant.API.Controllers
 {
     [ApiController]
+    [Produces("application/json", "application/xml")]
     public class DishController : ControllerBase
     {
         private readonly IDishService _dishService;
@@ -23,15 +24,17 @@ namespace Restaurant.API.Controllers
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+
         [HttpGet("api/dishes")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDishList(bool dividedByType = false)
         {
             //Response.Headers.Add("Access-Control-Allow-Origin", "*");
             if (dividedByType)
             {
                 var dishesDictionary = await _dishService.GetDictionaryDishesAsync();
-
-                return Ok(DishMapper.MapDictionary(_mapper, dishesDictionary));
+                
+                return Ok(_mapper.Map<Dictionary<string, IEnumerable<DishForListDTO>>>(dishesDictionary));
             }
             var dishes = await _dishService.GetDishesAsync();
 
@@ -39,6 +42,8 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpGet("api/dishes/{PositionId}", Name = "GetDish")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<DishDetailInfoDTO>> GetDish(Guid PositionId)
         {
             var dish = await _dishService.GetDishAsync(PositionId);
@@ -50,6 +55,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpPost("api/dishes")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<DishDetailInfoDTO>> CreateDish([FromForm] DishCreationDTO dish)
         {
             var finalDish = _mapper.Map<Dish>(dish);
@@ -62,10 +68,11 @@ namespace Restaurant.API.Controllers
             //To return value
             var dishToReturn = _mapper.Map<DishDetailInfoDTO>(dishAdded);
             //CreatedAtRoute
-            return CreatedAtRoute("GetWine", new { PositionId = dishToReturn.PositionId }, dishToReturn);
+            return CreatedAtRoute("GetWine", new { dishToReturn.PositionId }, dishToReturn);
         }
 
         [HttpDelete("api/dishes")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAllDishes()
         {
             await _dishService.DeleteAllDishes();

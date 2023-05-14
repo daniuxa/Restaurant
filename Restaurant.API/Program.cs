@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Bll.Services;
 using Restaurant.API.Middlewares;
+using Microsoft.AspNetCore.Builder;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -80,7 +81,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseMiddleware<CorsMiddleware>();
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

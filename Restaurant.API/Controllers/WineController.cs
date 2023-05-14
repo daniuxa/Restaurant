@@ -30,7 +30,7 @@ namespace Restaurant.API.Controllers
             {
                 var wineDictionary = await _wineService.GetDictionaryWinesAsync();
 
-                return Ok(WineMapper.MapDictionary(_mapper, wineDictionary));
+                return Ok(_mapper.Map<Dictionary<string, IEnumerable<WineForListDTO>>>(wineDictionary));
             }
             var wines = await _wineService.GetWinesAsync();
 

@@ -29,7 +29,7 @@ namespace Restaurant.API.Controllers
             {
                 var drinksDictionary = await _drinkService.GetDictionaryDrinksAsync();
 
-                return Ok(DrinkMapper.MapDictionary(_mapper, drinksDictionary));
+                return Ok(_mapper.Map<Dictionary<string, IEnumerable<DrinkForListDTO>>>(drinksDictionary));
             }
 
             var drinks = await _drinkService.GetDrinksAsync();
