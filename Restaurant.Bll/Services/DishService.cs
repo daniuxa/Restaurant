@@ -58,5 +58,10 @@ namespace Restaurant.Bll.Services
             }
             return dictionaryDishes;
         }
+
+        public void DeleteDish(Dish dish)
+        {
+            _restaurantContext.Dishes.Remove(dish);
+        }
     }
 }

@@ -59,5 +59,10 @@ namespace Restaurant.Bll.Services
             }
             return dictionaryWines;
         }
+
+        public void DeleteWine(Wine wine)
+        {
+            _restaurantContext.Wines.Remove(wine);
+        }
     }
 }

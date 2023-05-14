@@ -15,5 +15,6 @@ namespace Restaurant.Bll.Services.Interfaces
         Task<bool> SaveChangesAsync();
         Task<Wine> AddWineAsync(Guid positionId, Wine wine, string photoLink);
         Task DeleteAllWines();
+        void DeleteWine(Wine wine);
     }
 }

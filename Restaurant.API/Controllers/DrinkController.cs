@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Bll.CustomMappers;
 using Restaurant.Bll.Models.DrinkDTOs;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Dal.Entities;
@@ -9,6 +8,7 @@ using Restaurant.Dal.Entities;
 namespace Restaurant.API.Controllers
 {
     [ApiController]
+    [Produces("application/json", "application/xml")]
     public class DrinkController : ControllerBase
     {
         private readonly IDrinkService _drinkService;
@@ -23,6 +23,7 @@ namespace Restaurant.API.Controllers
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         [HttpGet("api/drinks")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDrinkList(bool dividedByType = false)
         {
             if (dividedByType)
@@ -37,6 +38,8 @@ namespace Restaurant.API.Controllers
             return Ok(_mapper.Map<IEnumerable<DrinkForListDTO>>(drinks));
         }
         [HttpGet("api/drinks/{PositionId}", Name = "GetDrink")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<DrinkDetailInfoDTO>> GetDrink(Guid PositionId)
         {
             var drink = await _drinkService.GetDrinkAsync(PositionId);
@@ -48,6 +51,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpPost("api/drinks")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<DrinkDetailInfoDTO>> CreateWine([FromForm] DrinkCreationDTO drink)
         {
             var finalDrink = _mapper.Map<Drink>(drink);
@@ -64,9 +68,25 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpDelete("api/drinks")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAllDrinks()
         {
             await _drinkService.DeleteAllDrinks();
+            await _drinkService.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("api/drinks/{positionId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteDrink(Guid positionId)
+        {
+            var drinkToDelete = await _drinkService.GetDrinkAsync(positionId);
+            if (drinkToDelete == null)
+            {
+                return NotFound();
+            }
+            _drinkService.DeleteDrink(drinkToDelete);
             await _drinkService.SaveChangesAsync();
             return NoContent();
         }

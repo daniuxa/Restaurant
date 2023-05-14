@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Bll.CustomMappers;
 using Restaurant.Bll.Models.DishDTOs;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Dal.Entities;
@@ -29,7 +28,6 @@ namespace Restaurant.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetDishList(bool dividedByType = false)
         {
-            //Response.Headers.Add("Access-Control-Allow-Origin", "*");
             if (dividedByType)
             {
                 var dishesDictionary = await _dishService.GetDictionaryDishesAsync();
@@ -37,7 +35,6 @@ namespace Restaurant.API.Controllers
                 return Ok(_mapper.Map<Dictionary<string, IEnumerable<DishForListDTO>>>(dishesDictionary));
             }
             var dishes = await _dishService.GetDishesAsync();
-
             return Ok(_mapper.Map<IEnumerable<DishForListDTO>>(dishes));
         }
 
@@ -76,6 +73,20 @@ namespace Restaurant.API.Controllers
         public async Task<IActionResult> DeleteAllDishes()
         {
             await _dishService.DeleteAllDishes();
+            await _dishService.SaveChangesAsync();
+            return NoContent();
+        }
+        [HttpDelete("api/dishes/{positionId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteDish(Guid positionId)
+        {
+            var dishToDelete = await _dishService.GetDishAsync(positionId);
+            if (dishToDelete == null)
+            {
+                return NotFound();
+            }
+            _dishService.DeleteDish(dishToDelete);
             await _dishService.SaveChangesAsync();
             return NoContent();
         }

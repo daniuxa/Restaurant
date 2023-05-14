@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Bll.CustomMappers;
 using Restaurant.Bll.Models.WineDTOs;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Dal.Entities;
@@ -9,6 +8,7 @@ using Restaurant.Dal.Entities;
 namespace Restaurant.API.Controllers
 {
     [ApiController]
+    [Produces("application/json", "application/xml")]
     public class WineController : ControllerBase
     {
         private readonly IWineService _wineService;
@@ -24,6 +24,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpGet("api/wines")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetWineList(bool dividedByCountry = false)
         {
             if (dividedByCountry)
@@ -37,6 +38,8 @@ namespace Restaurant.API.Controllers
             return Ok(_mapper.Map<IEnumerable<WineForListDTO>>(wines));
         }
         [HttpGet("api/wines/{PositionId}", Name = "GetWine")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<WineDetailInfoDTO>> GetWine(Guid PositionId)
         {
             var wine = await _wineService.GetWineAsync(PositionId);
@@ -48,6 +51,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpPost("api/wines")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<WineDetailInfoDTO>> CreateWine([FromForm]WineCreationDTO wine)
         {
             var finalWine = _mapper.Map<Wine>(wine);
@@ -64,9 +68,24 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpDelete("api/wines")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAllWines()
         {
             await _wineService.DeleteAllWines();
+            await _wineService.SaveChangesAsync();
+            return NoContent();
+        }
+        [HttpDelete("api/wines/{positionId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteDish(Guid PositionId)
+        {
+            var wineToDelete = await _wineService.GetWineAsync(PositionId);
+            if (wineToDelete == null)
+            {
+                return NotFound();
+            }
+            _wineService.DeleteWine(wineToDelete);
             await _wineService.SaveChangesAsync();
             return NoContent();
         }

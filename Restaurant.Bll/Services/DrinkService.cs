@@ -30,6 +30,11 @@ namespace Restaurant.Bll.Services
             _restaurantContext.Drinks.RemoveRange(await _restaurantContext.Drinks.ToListAsync());
         }
 
+        public void DeleteDrink(Drink drink)
+        {
+            _restaurantContext.Drinks.Remove(drink);
+        }
+
         public async Task<IDictionary<string, IEnumerable<Drink>>> GetDictionaryDrinksAsync()
         {
             IDictionary<string, IEnumerable<Drink>> dictionaryDrinks = new Dictionary<string, IEnumerable<Drink>>();
