@@ -27,10 +27,7 @@ services:
   networks:
   - restaurant_net
   volumes:
-  - restaurant_db_container:/var/lib/mssql/data
-
-volumes:
-  restaurant_db_container:
+  - ./db-data:/var/opt/mssql/data
 
 networks:
  restaurant_net:

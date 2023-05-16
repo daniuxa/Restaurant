@@ -20,6 +20,7 @@ namespace Restaurant.Bll.Services
         }
         public async Task<Table> AddTableAsync(Table table)
         {
+            //Possible error
             await _restaurantContext.Tables.AddAsync(table);
             return table;
         }
@@ -29,10 +30,20 @@ namespace Restaurant.Bll.Services
             _restaurantContext.Tables.RemoveRange(await _restaurantContext.Tables.ToListAsync());
         }
 
+        public void DeleteTable(Table table)
+        {
+            _restaurantContext.Tables.Remove(table);
+        }
+
         public async Task<Table?> GetTableAsync(int tableNumber)
         {
             Table? table = await _restaurantContext.Tables.Where(x => x.TableNumber == tableNumber).FirstOrDefaultAsync();
             return table;
+        }
+
+        public async Task<IEnumerable<Table>> GetTablesAsync()
+        {
+            return await _restaurantContext.Tables.ToListAsync();
         }
 
         public async Task<bool> SaveChangesAsync()

@@ -14,5 +14,7 @@ namespace Restaurant.Bll.Services.Interfaces
         Task<bool> SaveChangesAsync();
         Task DeleteAllTables();
         Task<Table?> GetTableAsync(int tableNumber);
+        Task<IEnumerable<Table>> GetTablesAsync();
+        void DeleteTable(Table table);
     }
 }

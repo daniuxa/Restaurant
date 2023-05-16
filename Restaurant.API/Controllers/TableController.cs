@@ -21,7 +21,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpGet("api/tables/{tableNumber}", Name = "GetTable")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TableDTO>> GetTable(int tableNumber)
         {
@@ -42,8 +42,29 @@ namespace Restaurant.API.Controllers
             await _tableService.SaveChangesAsync();
             var tableToReturn = _mapper.Map<TableDTO>(addedTable);
             return CreatedAtRoute("GetTable", new { tableToReturn.TableNumber }, tableToReturn);
-
         }
 
+        [HttpGet("api/tables")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<TableDTO>>> GetTables()
+        {
+            var tables = await _tableService.GetTablesAsync();
+            return Ok(_mapper.Map<IEnumerable<TableDTO>>(tables));
+        }
+        [HttpDelete("api/tables/{tableNumber}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteTable(int tableNumber)
+        {
+            var tableToDelete = await _tableService.GetTableAsync(tableNumber);
+            if (tableToDelete == null)
+            {
+                return NotFound();
+            }
+            _tableService.DeleteTable(tableToDelete);
+            await _tableService.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }
