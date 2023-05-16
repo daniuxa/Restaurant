@@ -129,18 +129,17 @@ namespace Restaurant.Dal.Migrations
 
             modelBuilder.Entity("Restaurant.Dal.Entities.Table", b =>
                 {
-                    b.Property<int>("TableId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("TableNumber")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TableId"), 1L, 1);
 
                     b.Property<int>("AmountOfPlaces")
                         .HasColumnType("int");
 
-                    b.HasKey("TableId");
+                    b.HasKey("TableNumber");
 
                     b.ToTable("Tables");
+
+                    b.HasCheckConstraint("CHK_PK_TableNumber", "TableNumber > 0");
                 });
 
             modelBuilder.Entity("Restaurant.Dal.Entities.DeliveryOrder", b =>
@@ -193,10 +192,10 @@ namespace Restaurant.Dal.Migrations
                     b.Property<int>("AmountOfGuests")
                         .HasColumnType("int");
 
-                    b.Property<int>("TableId")
+                    b.Property<int>("TableNumber")
                         .HasColumnType("int");
 
-                    b.HasIndex("TableId");
+                    b.HasIndex("TableNumber");
 
                     b.ToTable("InRestaurantOrders");
                 });
@@ -318,7 +317,7 @@ namespace Restaurant.Dal.Migrations
 
                     b.HasOne("Restaurant.Dal.Entities.Table", "Table")
                         .WithMany("InRestaurantOrders")
-                        .HasForeignKey("TableId")
+                        .HasForeignKey("TableNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

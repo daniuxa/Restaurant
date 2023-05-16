@@ -16,9 +16,9 @@ namespace Restaurant.Bll.Profiles
             CreateMap<Dish, DishForListDTO>();
             CreateMap<Dish, DishDetailInfoDTO>();
             CreateMap<DishCreationDTO, Dish>();
-            //CreateMap<KeyValuePair<string, IEnumerable<Dish>>, DishDictionaryDTO>()
-            //    .ForMember(destination => destination.TypeOfDish, member => member.MapFrom(source => source.Key))
-            //    .ForMember(destination => destination.Dishes, member => member.MapFrom(source => source.Value));
+            CreateMap<Dish, DishForUpdateDTO>();
+            CreateMap<DishForUpdateDTO, Dish>();
+
         }
     }
 }

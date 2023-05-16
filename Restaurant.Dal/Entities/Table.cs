@@ -11,7 +11,7 @@ namespace Restaurant.Dal.Entities
     [Table("Tables")]
     public class Table
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int TableNumber { get; set; } 
         public int AmountOfPlaces { get; set; }
         public IEnumerable<InRestaurantOrder> InRestaurantOrders { get; set; } = new List<InRestaurantOrder>();

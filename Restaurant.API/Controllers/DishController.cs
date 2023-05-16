@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Restaurant.Bll.Models.DishDTOs;
 using Restaurant.Bll.Services.Interfaces;
@@ -88,6 +89,38 @@ namespace Restaurant.API.Controllers
             }
             _dishService.DeleteDish(dishToDelete);
             await _dishService.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpPatch("api/dishes/{positionId}")]
+        public async Task<IActionResult> PartiallyUpdateDish(Guid positionId, JsonPatchDocument<DishForUpdateDTO> patchDocument)
+        {
+
+            var dishForUpdate = await _dishService.GetDishAsync(positionId);
+
+            if (dishForUpdate == null)
+            {
+                return NotFound();
+            }
+
+            var dishToPatch = _mapper.Map<DishForUpdateDTO>(dishForUpdate);
+
+            patchDocument.ApplyTo(dishToPatch, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!TryValidateModel(dishToPatch))
+            {
+                return BadRequest(ModelState);
+            }
+
+            _mapper.Map(dishToPatch, dishForUpdate);
+
+            await _dishService.SaveChangesAsync();
+
             return NoContent();
         }
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Restaurant.Dal.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,13 +40,13 @@ namespace Restaurant.Dal.Migrations
                 name: "Tables",
                 columns: table => new
                 {
-                    TableId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TableNumber = table.Column<int>(type: "int", nullable: false),
                     AmountOfPlaces = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tables", x => x.TableId);
+                    table.PrimaryKey("PK_Tables", x => x.TableNumber);
+                    table.CheckConstraint("CHK_PK_TableNumber", "TableNumber > 0");
                 });
 
             migrationBuilder.CreateTable(
@@ -172,7 +172,7 @@ namespace Restaurant.Dal.Migrations
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     AmountOfGuests = table.Column<int>(type: "int", nullable: false),
-                    TableId = table.Column<int>(type: "int", nullable: false)
+                    TableNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,10 +183,10 @@ namespace Restaurant.Dal.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId");
                     table.ForeignKey(
-                        name: "FK_InRestaurantOrders_Tables_TableId",
-                        column: x => x.TableId,
+                        name: "FK_InRestaurantOrders_Tables_TableNumber",
+                        column: x => x.TableNumber,
                         principalTable: "Tables",
-                        principalColumn: "TableId",
+                        principalColumn: "TableNumber",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -234,9 +234,9 @@ namespace Restaurant.Dal.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_InRestaurantOrders_TableId",
+                name: "IX_InRestaurantOrders_TableNumber",
                 table: "InRestaurantOrders",
-                column: "TableId");
+                column: "TableNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_PhoneNumberOfClient",

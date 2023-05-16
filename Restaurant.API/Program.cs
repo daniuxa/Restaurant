@@ -8,6 +8,7 @@ using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Bll.Services;
 using Restaurant.API.Middlewares;
 using Microsoft.AspNetCore.Builder;
+using Newtonsoft.Json.Serialization;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -60,6 +61,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IWineService, WineService>();
 builder.Services.AddScoped<IDrinkService, DrinkService>();
 builder.Services.AddScoped<IDishService, DishService>();
+builder.Services.AddScoped<ITableService, TableService>();
 builder.Services.AddTransient<ICloudImageService, CloudImageService>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
