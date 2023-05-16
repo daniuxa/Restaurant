@@ -20,7 +20,7 @@ services:
   image: mcr.microsoft.com/mssql/server:2019-latest
   container_name: restaurant_db_container
   ports: 
-  - "1450:1433"
+  - "1460:1433"
   environment:
   - SA_PASSWORD=RestaurantServicePassword123
   - ACCEPT_EULA=Y
