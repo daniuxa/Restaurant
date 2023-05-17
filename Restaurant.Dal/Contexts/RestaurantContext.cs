@@ -19,7 +19,6 @@ namespace Restaurant.Dal.Contexts
         public DbSet<MenuPosition> MenuPositions { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Table> Tables { get; set; } = null!;
-        public DbSet<TakeAwayOrder> TakeAwayOrders { get; set; } = null!;
         public DbSet<Wine> Wines { get; set; } = null!;
         public DbSet<PositionInOrder> PositionsInOrders { get; set; } = null!;
         public RestaurantContext(DbContextOptions<RestaurantContext> options) : base(options)

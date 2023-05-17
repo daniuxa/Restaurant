@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant.Dal.Contexts;
 
@@ -11,9 +12,10 @@ using Restaurant.Dal.Contexts;
 namespace Restaurant.Dal.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    partial class RestaurantContextModelSnapshot : ModelSnapshot
+    [Migration("20230517212109_ChangedDateFieldForOrder")]
+    partial class ChangedDateFieldForOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,6 +154,10 @@ namespace Restaurant.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("DeliveryOrders");
                 });
 
@@ -186,6 +192,9 @@ namespace Restaurant.Dal.Migrations
             modelBuilder.Entity("Restaurant.Dal.Entities.InRestaurantOrder", b =>
                 {
                     b.HasBaseType("Restaurant.Dal.Entities.Order");
+
+                    b.Property<int>("AmountOfGuests")
+                        .HasColumnType("int");
 
                     b.Property<int>("TableNumber")
                         .HasColumnType("int");

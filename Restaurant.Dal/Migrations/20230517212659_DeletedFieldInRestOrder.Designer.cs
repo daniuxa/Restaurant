@@ -12,8 +12,8 @@ using Restaurant.Dal.Contexts;
 namespace Restaurant.Dal.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20230516164713_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20230517212659_DeletedFieldInRestOrder")]
+    partial class DeletedFieldInRestOrder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,18 +26,24 @@ namespace Restaurant.Dal.Migrations
 
             modelBuilder.Entity("Restaurant.Dal.Entities.Client", b =>
                 {
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ClientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PhoneNumber");
+                    b.HasKey("ClientId");
 
                     b.ToTable("Clients");
                 });
@@ -88,22 +94,18 @@ namespace Restaurant.Dal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
-                    b.Property<DateTime>("CloseDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("OpenDateTime")
+                    b.Property<DateTime>("DateOfOrder")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PhoneNumberOfClient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("PhoneNumberOfClient");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
                 });
@@ -152,10 +154,6 @@ namespace Restaurant.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.ToTable("DeliveryOrders");
                 });
 
@@ -191,25 +189,12 @@ namespace Restaurant.Dal.Migrations
                 {
                     b.HasBaseType("Restaurant.Dal.Entities.Order");
 
-                    b.Property<int>("AmountOfGuests")
-                        .HasColumnType("int");
-
                     b.Property<int>("TableNumber")
                         .HasColumnType("int");
 
                     b.HasIndex("TableNumber");
 
                     b.ToTable("InRestaurantOrders");
-                });
-
-            modelBuilder.Entity("Restaurant.Dal.Entities.TakeAwayOrder", b =>
-                {
-                    b.HasBaseType("Restaurant.Dal.Entities.Order");
-
-                    b.Property<DateTime>("TimePickUp")
-                        .HasColumnType("datetime2");
-
-                    b.ToTable("TakeAwayOrders");
                 });
 
             modelBuilder.Entity("Restaurant.Dal.Entities.Wine", b =>
@@ -256,7 +241,7 @@ namespace Restaurant.Dal.Migrations
                 {
                     b.HasOne("Restaurant.Dal.Entities.Client", "Client")
                         .WithMany("Orders")
-                        .HasForeignKey("PhoneNumberOfClient")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -324,15 +309,6 @@ namespace Restaurant.Dal.Migrations
                         .IsRequired();
 
                     b.Navigation("Table");
-                });
-
-            modelBuilder.Entity("Restaurant.Dal.Entities.TakeAwayOrder", b =>
-                {
-                    b.HasOne("Restaurant.Dal.Entities.Order", null)
-                        .WithOne()
-                        .HasForeignKey("Restaurant.Dal.Entities.TakeAwayOrder", "OrderId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Restaurant.Dal.Entities.Wine", b =>

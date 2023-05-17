@@ -12,12 +12,11 @@ namespace Restaurant.Dal.Entities
     public abstract class Order
     {
         public int OrderId { get; set; }
-        public DateTime OpenDateTime { get; set; }
-        public DateTime CloseDateTime { get; set; }
+        public DateTime DateOfOrder { get; set; }
         public decimal TotalPrice { get; set; }
 
-        public string PhoneNumberOfClient { get; set; } = null!;
-        [ForeignKey("PhoneNumberOfClient")]
+        public int ClientId{ get; set; }
+        [ForeignKey("ClientId")]
         [Required]
         public Client Client { get; set; } = null!;
         public IEnumerable<MenuPosition> MenuPositions { get; set; } = new List<MenuPosition>();

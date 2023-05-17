@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Restaurant.Dal.Migrations
 {
-    public partial class InitialCreation : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,13 +13,15 @@ namespace Restaurant.Dal.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    PhoneNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.PhoneNumber);
+                    table.PrimaryKey("PK_Clients", x => x.ClientId);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,16 +60,16 @@ namespace Restaurant.Dal.Migrations
                     OpenDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CloseDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PhoneNumberOfClient = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ClientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Clients_PhoneNumberOfClient",
-                        column: x => x.PhoneNumberOfClient,
+                        name: "FK_Orders_Clients_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "PhoneNumber",
+                        principalColumn: "ClientId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -216,32 +218,15 @@ namespace Restaurant.Dal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "TakeAwayOrders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    TimePickUp = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TakeAwayOrders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_TakeAwayOrders_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_InRestaurantOrders_TableNumber",
                 table: "InRestaurantOrders",
                 column: "TableNumber");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_PhoneNumberOfClient",
+                name: "IX_Orders_ClientId",
                 table: "Orders",
-                column: "PhoneNumberOfClient");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PositionsInOrders_MenuPostionId",
@@ -268,9 +253,6 @@ namespace Restaurant.Dal.Migrations
 
             migrationBuilder.DropTable(
                 name: "PositionsInOrders");
-
-            migrationBuilder.DropTable(
-                name: "TakeAwayOrders");
 
             migrationBuilder.DropTable(
                 name: "Wines");

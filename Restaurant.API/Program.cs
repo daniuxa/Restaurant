@@ -58,6 +58,9 @@ builder.Services.AddDbContext<RestaurantContext>(options =>
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddScoped<IDeliveryOrderService, DeliveryOrderService>();
+builder.Services.AddScoped<IInRestaurantOrderService, InRestaurantOrderService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IWineService, WineService>();
 builder.Services.AddScoped<IDrinkService, DrinkService>();
 builder.Services.AddScoped<IDishService, DishService>();

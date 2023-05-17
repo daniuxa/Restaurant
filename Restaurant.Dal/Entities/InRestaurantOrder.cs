@@ -10,7 +10,6 @@ namespace Restaurant.Dal.Entities
     [Table("InRestaurantOrders")]
     public class InRestaurantOrder : Order
     {
-        public int AmountOfGuests { get; set; }
         [ForeignKey("TableNumber")]
         public Table Table { get; set; } = null!;
         public int TableNumber { get; set; }

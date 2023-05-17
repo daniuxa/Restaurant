@@ -10,5 +10,6 @@ namespace Restaurant.Bll.Models.TableDTOs
     {
         public int TableNumber { get; set; }
         public int AmountOfPlaces { get; set; }
+        public string Description { get; set; }
     }
 }

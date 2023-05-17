@@ -40,7 +40,7 @@ namespace Restaurant.API.Controllers
         }
 
         [HttpGet("api/dishes/{PositionId}", Name = "GetDish")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<DishDetailInfoDTO>> GetDish(Guid PositionId)
         {

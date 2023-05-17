@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant.Dal.Entities
+namespace Restaurant.Bll.Models.OrderDTOs.DeliveryOrderDTOs
 {
-    [Table("DeliveryOrders")]
-    public class DeliveryOrder : Order
+    public class DeliveryOrderDTO : OrderDTO
     {
         public string Address { get; set; } = null!;
     }
