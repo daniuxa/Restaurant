@@ -15,6 +15,8 @@ namespace Restaurant.Bll.Profiles
         {
             CreateMap<TableForCreationDTO, Table>();
             CreateMap<Table, TableDTO>();
+            CreateMap<TableDTO, Table>();
+
         }
     }
 }
