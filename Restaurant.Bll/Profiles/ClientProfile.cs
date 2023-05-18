@@ -14,6 +14,7 @@ namespace Restaurant.Bll.Profiles
         public ClientProfile()
         {
             CreateMap<Client, ClientDTO>();
+            CreateMap<Client, ClientDTO>().ReverseMap();
             CreateMap<ClientForCreationDTO, Client>()
                 .ForMember(destination => destination.FirstName, 
                 member => member.MapFrom(source => ParserOfName.ParseForNameSurname(source.Name, ParserOfName.NameOrSurname.Name)))

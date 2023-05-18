@@ -24,6 +24,11 @@ namespace Restaurant.Bll.Services
             return order;
         }
 
+        public async Task DeleteAllOrders()
+        {
+            _restaurantContext.DeliveryOrders.RemoveRange(await _restaurantContext.DeliveryOrders.ToListAsync());
+        }
+
         public void DeleteOrder(DeliveryOrder order)
         {
             _restaurantContext.DeliveryOrders.Remove(order);
@@ -32,13 +37,17 @@ namespace Restaurant.Bll.Services
         public async Task<DeliveryOrder?> GetOrderAsync(int orderId)
         {
             DeliveryOrder? order = null;
-            order = await _restaurantContext.DeliveryOrders.Where(x => x.OrderId == orderId).FirstOrDefaultAsync();
+            order = await _restaurantContext.DeliveryOrders
+                .Include(x => x.PositionsInOrders).ThenInclude(x => x.MenuPosition).Include(x => x.Client)
+                .Where(x => x.OrderId == orderId).FirstOrDefaultAsync();
             return order;
         }
 
         public async Task<IEnumerable<DeliveryOrder>> GetOrdersAsync()
         {
-            return await _restaurantContext.DeliveryOrders.ToListAsync();
+            return await _restaurantContext.DeliveryOrders
+                .Include(x => x.PositionsInOrders).ThenInclude(x => x.MenuPosition).Include(x => x.Client)
+                .ToListAsync();
         }
 
         public async Task<bool> SaveChangesAsync()

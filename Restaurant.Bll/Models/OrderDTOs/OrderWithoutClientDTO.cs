@@ -1,4 +1,4 @@
-﻿using Restaurant.Bll.Models.ClientDTOs;
+﻿using Restaurant.Dal.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Bll.Models.OrderDTOs
 {
-    public class OrderForCreation
+    public class OrderWithoutClientDTO
     {
-        public int OrderId { get; set; }
         public DateTime DateOfOrder { get; set; }
-        public ClientForCreationDTO Client { get; set; } = null!;
+        public decimal TotalPrice { get; set; }
+        public int? ClientId { get; set; }
+        public Client? Client { get; set; }
     }
 }

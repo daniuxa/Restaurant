@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Bll.Models.OrderDTOs.InRestaurantOrderDTOs
 {
-    public class InRestaurantOrderDTO : DeliveryOrderDTO
+    public class InRestaurantOrderDTO : OrderDTO
     {
         public TableDTO Table { get; set; } = null!;
     }

@@ -16,7 +16,7 @@ namespace Restaurant.Bll.Profiles
             CreateMap<TableForCreationDTO, Table>();
             CreateMap<Table, TableDTO>()
                 .ForMember(destination => destination.Description, 
-                member => member.MapFrom(source => "Table Number " + source.TableNumber + " for " + source.AmountOfPlaces + "persons"));
+                member => member.MapFrom(source => "Table Number " + source.TableNumber + " for " + source.AmountOfPlaces + " persons"));
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Restaurant.Bll.Services.Interfaces
         Task<IEnumerable<T>> GetOrdersAsync();
         Task<bool> SaveChangesAsync();
         void DeleteOrder(T order);
+        Task DeleteAllOrders();
         Task<T> AddOrderAsync(T order);
     }
 }

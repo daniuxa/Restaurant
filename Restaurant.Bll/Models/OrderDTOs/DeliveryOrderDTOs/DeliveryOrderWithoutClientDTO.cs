@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Bll.Models.OrderDTOs.DeliveryOrderDTOs
 {
-    public class DeliveryOrderForCreationDTO : OrderForCreationDTO
+    public class DeliveryOrderWithoutClientDTO : OrderWithoutClientDTO
     {
         public string Address { get; set; } = null!;
     }

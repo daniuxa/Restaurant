@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace Restaurant.Dal.Entities
 {
     [Table("Orders")]
-    public abstract class Order
+    public class Order
     {
         public int OrderId { get; set; }
+        [Column(TypeName = "date")]
         public DateTime DateOfOrder { get; set; }
         public decimal TotalPrice { get; set; }
-
         public int ClientId{ get; set; }
         [ForeignKey("ClientId")]
         [Required]

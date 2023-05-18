@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Restaurant.Bll.Models.ClientDTOs;
+using Restaurant.Bll.Models.OrderDTOs;
 using Restaurant.Bll.Models.OrderDTOs.DeliveryOrderDTOs;
 using Restaurant.Bll.Models.OrderDTOs.InRestaurantOrderDTOs;
 using Restaurant.Dal.Entities;
@@ -14,8 +16,14 @@ namespace Restaurant.Bll.Profiles
     {
         public OrderProfile()
         {
+            CreateMap<Order, OrderDTO>();
+
             CreateMap<DeliveryOrder, DeliveryOrderDTO>();
+            CreateMap<DeliveryOrderForCreationDTO, DeliveryOrder>();
+
+            CreateMap<InResataurantOrderForCreationDTO, InRestaurantOrder>();
             CreateMap<InRestaurantOrder, InRestaurantOrderDTO>();
+
         }
     }
 }
