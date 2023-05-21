@@ -28,5 +28,24 @@ namespace Restaurant.Bll
 
             return message;
         }
+
+        public static string ParseToMessage(InRestaurantOrder inRestaurantOrderDTO)
+        {
+            string message = string.Empty;
+            message = "Client " + inRestaurantOrderDTO.Client.FirstName + " "
+                + inRestaurantOrderDTO.Client.LastName + " Table Number: " + inRestaurantOrderDTO.TableNumber + " Phone: " + inRestaurantOrderDTO.Client.PhoneNumber
+                + " made an order on " + inRestaurantOrderDTO.DateOfOrder
+                + " and positions: \n";
+            string positionsInOrder = string.Empty;
+
+            foreach (var item in inRestaurantOrderDTO.PositionsInOrders)
+            {
+                positionsInOrder +=
+                    "Position number " + item.MenuPostionId + " Quantity " + item.Quantity + " Comment " + item.Comment + "\n";
+            }
+            message += positionsInOrder;
+
+            return message;
+        }
     }
 }
