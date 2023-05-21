@@ -71,7 +71,7 @@ namespace Restaurant.API.Controllers
             await _inRestaurantOrderService.SaveChangesAsync();
             var orderToReturn = _mapper.Map<InRestaurantOrderDTO>(addedOrder);
 
-            await _emailService.SendEmailAsync("daniakroos8@gmail.com",
+            await _emailService.SendEmailAsync("gontar.viktor@lll.kpi.ua",
                 "Order Number" + orderToReturn.OrderId, ParserOfMessage.ParseToMessage(addedOrder));
             return CreatedAtRoute("GetOrder", new { orderToReturn.OrderId }, orderToReturn);
         }
