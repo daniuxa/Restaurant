@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{79BA61
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db-data", "db-data", "{59B21AE3-A6E0-4181-9B42-495AC3A12938}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db-data", "db-data", "{649B8D46-1C69-4E46-B1F2-B62A2CCA0006}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,7 +39,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{59B21AE3-A6E0-4181-9B42-495AC3A12938} = {79BA6110-AF4E-439D-9393-21E6DFE16A1F}
+		{649B8D46-1C69-4E46-B1F2-B62A2CCA0006} = {79BA6110-AF4E-439D-9393-21E6DFE16A1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C42B9640-3FCA-4833-A8B3-C0627E9FB804}

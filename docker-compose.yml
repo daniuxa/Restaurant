@@ -17,18 +17,22 @@ services:
   environment:
    - ASPNETCORE_ENVIRONMENT=Release
  db:
-  image: mcr.microsoft.com/mssql/server:2019-latest
+  image: mcr.microsoft.com/mssql/server:2022-latest
   container_name: restaurant_db_container
   ports: 
-  - "1450:1433"
+  - "1433:1433"
   environment:
   - SA_PASSWORD=RestaurantServicePassword123
   - ACCEPT_EULA=Y
   networks:
   - restaurant_net
   volumes:
-  - ./db-data:/var/opt/mssql/data
+  - restaurant_db_container:/var/lib/mssql/data
 
 networks:
  restaurant_net:
   driver: bridge
+
+volumes:
+  restaurant_db_container:
+

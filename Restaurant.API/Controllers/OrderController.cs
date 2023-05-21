@@ -16,12 +16,14 @@ namespace Restaurant.API.Controllers
     {
         private readonly IInRestaurantOrderService _inRestaurantOrderService;
         private readonly IDeliveryOrderService _deliveryOrderService;
+        private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
 
-        public OrderController(IInRestaurantOrderService inRestaurantOrderService, IDeliveryOrderService deliveryOrderService, IMapper mapper)
+        public OrderController(IInRestaurantOrderService inRestaurantOrderService, IDeliveryOrderService deliveryOrderService, IEmailService emailService, IMapper mapper)
         {
             this._inRestaurantOrderService = inRestaurantOrderService ?? throw new ArgumentNullException(nameof(inRestaurantOrderService));
             this._deliveryOrderService = deliveryOrderService ?? throw new ArgumentNullException(nameof(deliveryOrderService));
+            this._emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -30,6 +32,7 @@ namespace Restaurant.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrder(int orderId)
         {
+            await _emailService.SendEmailAsync("daniakroos8@gmail.com", "Test", "Test");
             DeliveryOrder? deliveryOrder = await _deliveryOrderService.GetOrderAsync(orderId);
             InRestaurantOrder? inRestaurantOrder = null;
             if (deliveryOrder == null)

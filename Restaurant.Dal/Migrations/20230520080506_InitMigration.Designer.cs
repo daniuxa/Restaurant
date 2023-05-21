@@ -12,8 +12,8 @@ using Restaurant.Dal.Contexts;
 namespace Restaurant.Dal.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20230517212659_DeletedFieldInRestOrder")]
-    partial class DeletedFieldInRestOrder
+    [Migration("20230520080506_InitMigration")]
+    partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,7 +98,7 @@ namespace Restaurant.Dal.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfOrder")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");

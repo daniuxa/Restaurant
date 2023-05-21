@@ -66,6 +66,7 @@ builder.Services.AddScoped<IDrinkService, DrinkService>();
 builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddScoped<ITableService, TableService>();
 builder.Services.AddTransient<ICloudImageService, CloudImageService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
