@@ -87,7 +87,12 @@ using (var scope = app.Services.CreateScope())
     );
 }
 
-app.UseMiddleware<CorsMiddleware>();
+//app.UseMiddleware<CorsMiddleware>();
+app.UseCors(
+     x => x.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+ );
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

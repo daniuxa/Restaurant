@@ -50,14 +50,14 @@ namespace Restaurant.API.Controllers
 
         [HttpPost("api/orders/delivery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder([FromForm] DeliveryOrderForCreationDTO deliveryOrderForCreation)
+        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder(DeliveryOrderForCreationDTO deliveryOrderForCreation)
         {
             var finalDeliveryOrder = _mapper.Map<DeliveryOrder>(deliveryOrderForCreation);
             var addedDeliveryOrder = await _deliveryOrderService.AddOrderAsync(finalDeliveryOrder);
             await _deliveryOrderService.SaveChangesAsync();
             var deliveryOrderToReturn = _mapper.Map<DeliveryOrderDTO>(addedDeliveryOrder);
 
-            await _emailService.SendEmailAsync("daniakroos8@gmail.com", 
+            await _emailService.SendEmailAsync("gontar.viktor@lll.kpi.ua", 
                 "Order Number" + deliveryOrderToReturn.OrderId, ParserOfMessage.ParseToMessage(addedDeliveryOrder));
             return CreatedAtRoute("GetOrder", new { deliveryOrderToReturn.OrderId }, deliveryOrderToReturn);
         }
