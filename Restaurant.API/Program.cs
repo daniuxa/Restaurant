@@ -9,6 +9,7 @@ using Restaurant.Bll.Services;
 using Restaurant.API.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Newtonsoft.Json.Serialization;
+using Restaurant.Bll;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()

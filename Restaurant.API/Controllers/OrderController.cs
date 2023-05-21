@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Restaurant.Bll;
 using Restaurant.Bll.Models.ClientDTOs;
 using Restaurant.Bll.Models.OrderDTOs;
 using Restaurant.Bll.Models.OrderDTOs.DeliveryOrderDTOs;
@@ -32,7 +33,7 @@ namespace Restaurant.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrder(int orderId)
         {
-            await _emailService.SendEmailAsync("daniakroos8@gmail.com", "Test", "Test");
+            //await _emailService.SendEmailAsync("daniakroos8@gmail.com", "Test", "Test");
             DeliveryOrder? deliveryOrder = await _deliveryOrderService.GetOrderAsync(orderId);
             InRestaurantOrder? inRestaurantOrder = null;
             if (deliveryOrder == null)
@@ -55,6 +56,9 @@ namespace Restaurant.API.Controllers
             var addedDeliveryOrder = await _deliveryOrderService.AddOrderAsync(finalDeliveryOrder);
             await _deliveryOrderService.SaveChangesAsync();
             var deliveryOrderToReturn = _mapper.Map<DeliveryOrderDTO>(addedDeliveryOrder);
+
+            await _emailService.SendEmailAsync("daniakroos8@gmail.com", 
+                "Order Number" + deliveryOrderToReturn.OrderId, ParserOfMessage.ParseToMessage(addedDeliveryOrder));
             return CreatedAtRoute("GetOrder", new { deliveryOrderToReturn.OrderId }, deliveryOrderToReturn);
         }
 

@@ -9,6 +9,7 @@ namespace Restaurant.Bll.Models.PositionsInOrders
 {
     public class PositionInOrderDTO
     {
+        //public Guid PositionId { get; set; }
         public MenuPositionDTO MenuPosition { get; set; } = null!;
         public int Quantity { get; set; }
         public string? Comment { get; set; }
