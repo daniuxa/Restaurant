@@ -50,7 +50,7 @@ namespace Restaurant.API.Controllers
 
         [HttpPost("api/orders/delivery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder(DeliveryOrderForCreationDTO deliveryOrderForCreation)
+        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder([FromForm] DeliveryOrderForCreationDTO deliveryOrderForCreation)
         {
             var finalDeliveryOrder = _mapper.Map<DeliveryOrder>(deliveryOrderForCreation);
             var addedDeliveryOrder = await _deliveryOrderService.AddOrderAsync(finalDeliveryOrder);
