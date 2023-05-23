@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Restaurant.Dal.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,15 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Restaurant.Dal
+namespace Restaurant.Dal.TypeConfigurations
 {
-    public static class InitialDataBase
+    public class DishTypeConfiguration : IEntityTypeConfiguration<Dish>
     {
-        public static void InitialRestaurant(ModelBuilder modelBuilder)
+        public void Configure(EntityTypeBuilder<Dish> builder)
         {
-            
-            modelBuilder.Entity<Dish>().HasData(
-                    new Dish { PositionId = new Guid("a680749e-8e43-4877-9fe4-cb7b3caf130d"), Name = "Humburger", TypeOfDish = "Burger", Price = 500, Weight = 400,PhotoLink = "https://ik.imagekit.io/Salivon/Menu/a680749e-8e43-4877-9fe4-cb7b3caf130d?updatedAt=1684828898277" },
+            builder.HasData(
+                    new Dish { PositionId = new Guid("a680749e-8e43-4877-9fe4-cb7b3caf130d"), Name = "Humburger", TypeOfDish = "Burger", Price = 500, Weight = 400, PhotoLink = "https://ik.imagekit.io/Salivon/Menu/a680749e-8e43-4877-9fe4-cb7b3caf130d?updatedAt=1684828898277" },
                     new Dish { PositionId = new Guid("78506416-6bc4-469e-9b03-1e2cf5b708a3"), Name = "Steak", TypeOfDish = "Meat", Price = 600, Weight = 500, PhotoLink = "https://ik.imagekit.io/Salivon/Menu/78506416-6bc4-469e-9b03-1e2cf5b708a3?updatedAt=1684828867102" },
                     new Dish { PositionId = new Guid("349ac30a-ffa1-4c2f-a871-a172100d5dd7"), Name = "Kebab", TypeOfDish = "Meat", Price = 400, Weight = 350, PhotoLink = "https://ik.imagekit.io/Salivon/Menu/349ac30a-ffa1-4c2f-a871-a172100d5dd7?updatedAt=1684828595451" },
                     new Dish { PositionId = new Guid("d0d023f5-aea2-4b19-9b18-f949b02ea87d"), Name = "Nugets", TypeOfDish = "Meat", Price = 300, Weight = 250, PhotoLink = "https://ik.imagekit.io/Salivon/Menu/d0d023f5-aea2-4b19-9b18-f949b02ea87d?updatedAt=1684828605346" },
@@ -25,9 +25,6 @@ namespace Restaurant.Dal
                     new Dish { PositionId = new Guid("177b95a1-8ead-4fb1-8510-9bec5c89c16a"), Name = "Dorado", TypeOfDish = "Fish", Price = 400, Weight = 250, PhotoLink = "https://ik.imagekit.io/Salivon/Menu/177b95a1-8ead-4fb1-8510-9bec5c89c16a?updatedAt=1684828620582" },
                     new Dish { PositionId = new Guid("a23bcec4-d07c-4e6a-a131-43a064066304"), Name = "Chef summer fish", TypeOfDish = "Fish", Price = 500, Weight = 250, PhotoLink = "https://ik.imagekit.io/Salivon/Menu/a23bcec4-d07c-4e6a-a131-43a064066304?updatedAt=1684828784696" }
                 );
-           /* modelBuilder.Entity<Wine>().HasData(
-                    new Wine { }
-                );*/
         }
     }
 }
