@@ -27,6 +27,7 @@ namespace Restaurant.Dal.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(RestaurantContext).Assembly);
+            //InitialDataBase.InitialRestaurant(modelBuilder);
         }
     }
 

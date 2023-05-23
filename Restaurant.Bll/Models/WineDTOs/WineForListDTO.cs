@@ -13,5 +13,6 @@ namespace Restaurant.Bll.Models.WineDTOs
         public bool IsBottle { get; set; }
         public string RegionName { get; set; } = null!;
         public string Country { get; set; } = null!;
+        public string TypeOfWine { get; set; } = null!;
     }
 }

@@ -11,7 +11,7 @@ using Restaurant.Dal.Entities;
 
 namespace Restaurant.API.Controllers
 {
-    [Produces("application/json", "application/xml")]
+    [Produces("application/json")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -44,13 +44,13 @@ namespace Restaurant.API.Controllers
             {
                 return NotFound();
             }
-
             return deliveryOrder == null ? Ok(_mapper.Map<InRestaurantOrderDTO>(inRestaurantOrder)) : Ok(_mapper.Map<DeliveryOrderDTO>(deliveryOrder));
         }
 
+        [Consumes("application/json")]
         [HttpPost("api/orders/delivery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder(DeliveryOrderForCreationDTO deliveryOrderForCreation)
+        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder([FromBody] DeliveryOrderForCreationDTO deliveryOrderForCreation)
         {
             var finalDeliveryOrder = _mapper.Map<DeliveryOrder>(deliveryOrderForCreation);
             var addedDeliveryOrder = await _deliveryOrderService.AddOrderAsync(finalDeliveryOrder);
@@ -62,6 +62,7 @@ namespace Restaurant.API.Controllers
             return CreatedAtRoute("GetOrder", new { deliveryOrderToReturn.OrderId }, deliveryOrderToReturn);
         }
 
+        [Consumes("application/json")]
         [HttpPost("api/orders/inrestaurant")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<InRestaurantOrderDTO>> CreateInRestaurantOrder(InResataurantOrderForCreationDTO inResataurantOrderForCreation)
