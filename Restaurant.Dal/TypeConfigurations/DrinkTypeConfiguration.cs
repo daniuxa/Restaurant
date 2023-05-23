@@ -65,12 +65,41 @@ namespace Restaurant.Dal.TypeConfigurations
 
                 new Drink
                 {
+                    PositionId = new Guid("2708e10a-b0cd-41b9-8ed2-0a8de5d864dd"),
+                    Name = "Pineapple juice",
+                    Price = 130,
+                    TypeOfDrink = "Juice",
+                    Volume = 200,
+                    PhotoLink = "https://ik.imagekit.io/Salivon/Menu/2708e10a-b0cd-41b9-8ed2-0a8de5d864dd"
+                },
+
+                new Drink
+                {
                     PositionId = new Guid("b46d3334-e53f-4dfa-bea9-3a1aef72d5d1"),
                     Name = "Black tea",
                     Price = 100,
                     TypeOfDrink = "Tea",
                     Volume = 150,
                     PhotoLink = "https://ik.imagekit.io/Salivon/Menu/b46d3334-e53f-4dfa-bea9-3a1aef72d5d1"
+                },
+
+                new Drink
+                {
+                    PositionId = new Guid("ce5db9df-0c47-4bfc-9d5f-1412cf7dc856"),
+                    Name = "Green tea",
+                    Price = 150,
+                    TypeOfDrink = "Tea",
+                    Volume = 150,
+                    PhotoLink = "https://ik.imagekit.io/Salivon/Menu/ce5db9df-0c47-4bfc-9d5f-1412cf7dc856"
+                },
+                new Drink
+                {
+                    PositionId = new Guid("17a3c19e-1575-4a69-ae89-46059cce8dc7"),
+                    Name = "Herbal tea",
+                    Price = 100,
+                    TypeOfDrink = "Tea",
+                    Volume = 150,
+                    PhotoLink = "https://ik.imagekit.io/Salivon/Menu/17a3c19e-1575-4a69-ae89-46059cce8dc7"
                 }
                 );
         }
