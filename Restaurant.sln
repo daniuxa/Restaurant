@@ -14,6 +14,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{79BA61
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Restaurant.ClientApp", "Restaurant.ClientApp\", "{EAF38757-E587-4EF6-A3AD-3D936F3F7043}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_62095"
+		Debug.AspNetCompiler.PhysicalPath = "Restaurant.ClientApp\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62095\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_62095"
+		Release.AspNetCompiler.PhysicalPath = "Restaurant.ClientApp\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62095\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "62095"
+		SlnRelativePath = "Restaurant.ClientApp\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +53,10 @@ Global
 		{76CEBBAA-CE1B-4A07-A182-9F719DCD5598}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76CEBBAA-CE1B-4A07-A182-9F719DCD5598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76CEBBAA-CE1B-4A07-A182-9F719DCD5598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF38757-E587-4EF6-A3AD-3D936F3F7043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF38757-E587-4EF6-A3AD-3D936F3F7043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF38757-E587-4EF6-A3AD-3D936F3F7043}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF38757-E587-4EF6-A3AD-3D936F3F7043}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
