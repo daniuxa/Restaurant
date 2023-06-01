@@ -19,13 +19,16 @@ namespace Restaurant.API.Controllers
         private readonly IDeliveryOrderService _deliveryOrderService;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public OrderController(IInRestaurantOrderService inRestaurantOrderService, IDeliveryOrderService deliveryOrderService, IEmailService emailService, IMapper mapper)
+        public OrderController(IInRestaurantOrderService inRestaurantOrderService, IDeliveryOrderService deliveryOrderService,
+            IEmailService emailService, IMapper mapper, IConfiguration configuration)
         {
             this._inRestaurantOrderService = inRestaurantOrderService ?? throw new ArgumentNullException(nameof(inRestaurantOrderService));
             this._deliveryOrderService = deliveryOrderService ?? throw new ArgumentNullException(nameof(deliveryOrderService));
             this._emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this._configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         [HttpGet("api/orders/{orderId}", Name = "GetOrder")]
@@ -33,7 +36,6 @@ namespace Restaurant.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetOrder(int orderId)
         {
-            //await _emailService.SendEmailAsync("daniakroos8@gmail.com", "Test", "Test");
             DeliveryOrder? deliveryOrder = await _deliveryOrderService.GetOrderAsync(orderId);
             InRestaurantOrder? inRestaurantOrder = null;
             if (deliveryOrder == null)
@@ -50,15 +52,17 @@ namespace Restaurant.API.Controllers
         [Consumes("application/json")]
         [HttpPost("api/orders/delivery")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder([FromBody] DeliveryOrderForCreationDTO deliveryOrderForCreation)
+        public async Task<ActionResult<DeliveryOrderDTO>> CreateDeliveryOrder(DeliveryOrderForCreationDTO deliveryOrderForCreation)
         {
             var finalDeliveryOrder = _mapper.Map<DeliveryOrder>(deliveryOrderForCreation);
             var addedDeliveryOrder = await _deliveryOrderService.AddOrderAsync(finalDeliveryOrder);
             await _deliveryOrderService.SaveChangesAsync();
             var deliveryOrderToReturn = _mapper.Map<DeliveryOrderDTO>(addedDeliveryOrder);
 
-            await _emailService.SendEmailAsync("gontar.viktor@lll.kpi.ua", 
-                "Order Number" + deliveryOrderToReturn.OrderId, ParserOfMessage.ParseToMessage(addedDeliveryOrder));
+            var emailToSendOrder = _configuration.GetSection("EmailsToSendOrder").GetSection("SalivonEmail").Value;
+
+            await _emailService.SendEmailAsync(emailToSendOrder, 
+                "Order Number " + deliveryOrderToReturn.OrderId, ParserOfMessage.ParseToMessage(addedDeliveryOrder));
             return CreatedAtRoute("GetOrder", new { deliveryOrderToReturn.OrderId }, deliveryOrderToReturn);
         }
 
@@ -72,7 +76,9 @@ namespace Restaurant.API.Controllers
             await _inRestaurantOrderService.SaveChangesAsync();
             var orderToReturn = _mapper.Map<InRestaurantOrderDTO>(addedOrder);
 
-            await _emailService.SendEmailAsync("gontar.viktor@lll.kpi.ua",
+            var emailToSendOrder = _configuration.GetSection("EmailsToSendOrder").GetSection("SalivonEmail").Value;
+
+            await _emailService.SendEmailAsync(emailToSendOrder,
                 "Order Number" + orderToReturn.OrderId, ParserOfMessage.ParseToMessage(addedOrder));
             return CreatedAtRoute("GetOrder", new { orderToReturn.OrderId }, orderToReturn);
         }

@@ -17,7 +17,9 @@ namespace Restaurant.Bll
 
         public static string? ParseForNameSurname(string name, NameOrSurname nameOrSurname)
         {
+            //Delete unneccessary spaces
             string nameWithoutSpaces = Regex.Replace(name, @"\s+", " ").Trim();
+            //Divide words by spaces
             string[] subStrings = nameWithoutSpaces.Split(' ');
             
             if (subStrings.Length == 0 || (subStrings.Length == 1 && nameOrSurname == NameOrSurname.Surname))
