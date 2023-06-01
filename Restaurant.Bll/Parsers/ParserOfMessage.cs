@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Bll
 {
+    //Temporal variant
     static public class ParserOfMessage
     {
         public static string ParseToMessage(DeliveryOrder deliveryOrderDTO)

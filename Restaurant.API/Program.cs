@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Restaurant.Bll.Services.Interfaces;
 using Restaurant.Bll.Services;
-using Restaurant.API.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Newtonsoft.Json.Serialization;
 using Restaurant.Bll;
@@ -88,11 +87,13 @@ using (var scope = app.Services.CreateScope())
 }
 
 //app.UseMiddleware<CorsMiddleware>();
+#if DEBUG
 app.UseCors(
      x => x.AllowAnyOrigin()
            .AllowAnyMethod()
            .AllowAnyHeader()
  );
+#endif
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
