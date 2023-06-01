@@ -87,13 +87,11 @@ using (var scope = app.Services.CreateScope())
 }
 
 //app.UseMiddleware<CorsMiddleware>();
-#if DEBUG
 app.UseCors(
      x => x.AllowAnyOrigin()
            .AllowAnyMethod()
            .AllowAnyHeader()
  );
-#endif
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
